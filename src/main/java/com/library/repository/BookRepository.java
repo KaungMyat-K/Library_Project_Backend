@@ -12,4 +12,9 @@ import com.library.entity.BookEntity;
 public interface BookRepository extends JpaRepository<BookEntity,Long> {
     
     Page<BookEntity> findByTitleContaining(@RequestParam("title") String title,Pageable pageable);
+
+    Page<BookEntity> findByCategory(@RequestParam("category") String category,Pageable pageable);
+
+
+
 }
