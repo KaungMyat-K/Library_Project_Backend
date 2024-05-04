@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.library.entity.BookEntity;
+import com.library.entity.ReviewEntity;
 
 
 
@@ -21,8 +22,10 @@ public class RestConfig implements RepositoryRestConfigurer  {
         HttpMethod[] unsportedAction = {HttpMethod.POST,HttpMethod.PATCH,HttpMethod.DELETE,HttpMethod.PUT};
 
         config.exposeIdsFor(BookEntity.class);
+        config.exposeIdsFor(ReviewEntity.class);
 
         disableHttpMethods(BookEntity.class,config,unsportedAction);
+        disableHttpMethods(ReviewEntity.class,config,unsportedAction);
 
         cors.addMapping(config.getBasePath()+"/**")
             .allowedOrigins(ALLOWED_ORIGIN);
