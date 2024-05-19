@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.library.Utils.ExtractJwt;
 import com.library.entity.BookEntity;
 import com.library.service.BookService;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -20,21 +22,24 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private ExtractJwt extractJwt;
+
     @PutMapping("/secure/checkout")
-    public BookEntity checkoutBook(@RequestParam Long bookid) throws Exception {
-        String userEmail = "aa@gmail.com";
+    public BookEntity checkoutBook(@RequestParam Long bookid,@RequestHeader(value="Authorization")String token) throws Exception {
+        String userEmail = extractJwt.payloadJWTExtraction(token,"\"sub\"");
         return bookService.checkoutBook(userEmail, bookid);
     }
 
     @GetMapping("/secure/ischeckout/byuser")
-    public Boolean checkoutBookByUser(@RequestParam Long bookId) {
-        String userEmail = "aa@gmail.com";
+    public Boolean checkoutBookByUser(@RequestParam Long bookId,@RequestHeader(value="Authorization")String token) {
+        String userEmail = extractJwt.payloadJWTExtraction(token,"\"sub\"");
         return bookService.checkoutBookByUser(userEmail,bookId);
     }
     
     @GetMapping("/secure/currentloans/count")
-    public int currentLoansCount(@RequestParam Long bookId) {
-        String userEmail = "aa@gmail.com";
+    public int currentLoansCount(@RequestHeader(value="Authorization")String token) {
+        String userEmail = extractJwt.payloadJWTExtraction(token,"\"sub\"");
         return bookService.currentLoansCount(userEmail);
     }
 }
