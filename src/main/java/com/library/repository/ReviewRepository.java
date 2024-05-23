@@ -14,4 +14,6 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity,Long> {
     
     Page<ReviewEntity> findByBookId(@RequestParam("book_id") String bookId,Pageable pageable);
 
+    ReviewEntity findByUserEmailAndBookId(String userEmail,Long bookId);
+
 }
