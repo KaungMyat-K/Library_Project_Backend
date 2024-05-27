@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library.Utils.ExtractJwt;
-import com.library.dao.ReviewDao;
+import com.library.dto.ReviewDto;
 import com.library.service.ReviewService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +27,7 @@ public class ReviewController {
     private ExtractJwt extractJwt;
 
     @PostMapping("/secure")
-    public void postReview(@RequestHeader(value="Authorization")String token,@RequestBody ReviewDao reviewDao)throws Exception {
+    public void postReview(@RequestHeader(value="Authorization")String token,@RequestBody ReviewDto reviewDao)throws Exception {
         String userEmail = extractJwt.payloadJWTExtraction(token,"\"sub\"");
         if(userEmail==null){
             throw new Exception("User email is missing");

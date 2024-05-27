@@ -1,11 +1,11 @@
-package com.library.dao;
+package com.library.dto;
 
 import java.util.Optional;
 
 import lombok.Data;
 
 @Data
-public class ReviewDao {
+public class ReviewDto {
     
     private double rating;
     private Long bookId;

@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.library.dao.ReviewDao;
+import com.library.dto.ReviewDto;
 import com.library.entity.ReviewEntity;
-import com.library.repository.BookRepository;
 import com.library.repository.ReviewRepository;
 
 @Service
@@ -21,7 +20,7 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
 
-    public void postReview(String userEmail,ReviewDao reviewDao)throws Exception{
+    public void postReview(String userEmail,ReviewDto reviewDao)throws Exception{
         ReviewEntity validateReview = reviewRepository.findByUserEmailAndBookId(userEmail, reviewDao.getBookId());
         if(validateReview!=null){
             throw new Exception("Review already created");
