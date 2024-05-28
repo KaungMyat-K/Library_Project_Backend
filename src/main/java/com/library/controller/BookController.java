@@ -1,5 +1,7 @@
 package com.library.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library.Utils.ExtractJwt;
+import com.library.dao.ShelfCurrentLoansDao;
 import com.library.entity.BookEntity;
 import com.library.service.BookService;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -41,5 +44,13 @@ public class BookController {
     public int currentLoansCount(@RequestHeader(value="Authorization")String token) {
         String userEmail = extractJwt.payloadJWTExtraction(token,"\"sub\"");
         return bookService.currentLoansCount(userEmail);
+    }
+
+    @GetMapping("/secure/currentloans")
+    public List<ShelfCurrentLoansDao> currentLoans(@RequestHeader(value = "Authorization") String token)
+        throws Exception
+    {
+        String userEmail = extractJwt.payloadJWTExtraction(token, "\"sub\"");
+        return bookService.currentLoans(userEmail);
     }
 }
