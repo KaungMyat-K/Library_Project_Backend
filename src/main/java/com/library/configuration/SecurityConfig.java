@@ -18,9 +18,8 @@ public class SecurityConfig {
 
         http.cors(cors-> Customizer.withDefaults());
         http.csrf(csrf->csrf.disable());
-        http.authorizeHttpRequests(config->config.requestMatchers("/api/books/secure/**","/api/reviews/secure/**").authenticated());
-        http.oauth2ResourceServer();
-        http.jwt();
+        http.authorizeHttpRequests(config->config.requestMatchers("/api/books/secure/**","/api/reviews/secure/**","/api/messages/secure/**").authenticated());
+        http.oauth2ResourceServer(oauth -> oauth.jwt(jwt->Customizer.withDefaults()));
         http.setSharedObject(ContentNegotiationStrategy.class,new HeaderContentNegotiationStrategy());
         Okta.configureResourceServer401ResponseBody(http);    
 
